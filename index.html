@@ -5,22 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Подтверждение возраста 18+</title>
-  <meta name="description" content="Информационная страница подтверждения возраста.">
+  <title>Информационная страница</title>
+  <meta name="description" content="Информационная страница.">
 
-  <!-- Превью социальных сетей -->
+  <!-- Превью для социальных сетей -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://maere10.github.io/">
-  <meta property="og:title" content="Подтверждение возраста 18+">
-  <meta property="og:description" content="Информационная страница подтверждения возраста.">
+  <meta property="og:title" content="Информационная страница">
+  <meta property="og:description" content="Посмотрите изображение и перейдите на сайт.">
   <meta property="og:image" content="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ru_RU">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Подтверждение возраста 18+">
-  <meta name="twitter:description" content="Информационная страница подтверждения возраста.">
+  <meta name="twitter:title" content="Информационная страница">
+  <meta name="twitter:description" content="Посмотрите изображение и перейдите на сайт.">
   <meta name="twitter:image" content="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png">
 
   <meta name="theme-color" content="#ffffff">
@@ -87,7 +87,6 @@
       box-shadow: 0 8px 35px rgba(0,0,0,.07);
     }
 
-    /* Основная картинка */
     .preview-image {
       display: block;
       width: 100%;
@@ -96,11 +95,6 @@
       margin: 0 auto 25px;
       border-radius: 9px;
       cursor: zoom-in;
-      transition: transform .2s ease;
-    }
-
-    .preview-image:hover {
-      transform: scale(1.02);
     }
 
     h1 {
@@ -122,13 +116,15 @@
       gap: 12px;
     }
 
-    button {
+    .buttons a {
+      display: block;
       width: 100%;
       padding: 17px;
       border: none;
       border-radius: 9px;
       font-size: 15px;
       font-weight: 700;
+      text-decoration: none;
       cursor: pointer;
     }
 
@@ -137,21 +133,9 @@
       background: #0039a6;
     }
 
-    .yes:hover {
-      background: #002d82;
-    }
-
     .no {
       color: #444;
       background: #eee;
-    }
-
-    .notice {
-      display: none;
-      margin-top: 20px;
-      font-size: 14px;
-      color: #666;
-      line-height: 1.5;
     }
 
     footer {
@@ -163,7 +147,7 @@
       background: #fff;
     }
 
-    /* Окно увеличенного изображения */
+    /* Увеличенное изображение */
     .lightbox {
       display: none;
       position: fixed;
@@ -180,7 +164,6 @@
     }
 
     .lightbox-image {
-      display: block;
       max-width: 100%;
       max-height: 88vh;
       width: auto;
@@ -200,7 +183,6 @@
       background: transparent;
       color: #fff;
       font-size: 38px;
-      font-weight: 300;
       cursor: pointer;
     }
 
@@ -239,62 +221,51 @@
   <main>
     <section class="card">
 
-      <!-- Картинка с увеличением внутри сайта -->
       <img
         class="preview-image"
         src="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png"
-        alt="Иллюстрация"
+        alt="Изображение"
         onclick="openImage()"
         role="button"
         tabindex="0"
-        onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openImage(); }"
       >
 
-      <h1>Вам исполнилось 18 лет?</h1>
+      <h1>Информационная страница</h1>
 
       <p class="description">
-        Для продолжения необходимо подтвердить,
-        что вам уже исполнилось 18 лет.
+        Нажмите на изображение, чтобы увеличить его,
+        или перейдите на сайт по ссылке ниже.
       </p>
 
       <div class="buttons">
-        <button class="yes" onclick="confirmAge()">
-          ДА, МНЕ ЕСТЬ 18 ЛЕТ
-        </button>
-
-        <button class="no" onclick="declineAge()">
-          НЕТ, МНЕ НЕТ 18 ЛЕТ
-        </button>
+        <a class="yes" href="https://ya.ru/">
+          ПЕРЕЙТИ НА ЯНДЕКС
+        </a>
       </div>
-
-      <div class="notice" id="notice"></div>
 
     </section>
   </main>
 
   <footer>
-    Информационная страница подтверждения возраста.
-    <br>
-    Не является официальным сайтом государственного органа.
+    Информационная страница.
     <br>
     © 2026
   </footer>
 
   <div class="flag"></div>
 
-  <!-- Увеличенное изображение -->
+  <!-- Окно просмотра изображения -->
   <div
     class="lightbox"
     id="lightbox"
     onclick="closeImage()"
     role="dialog"
     aria-modal="true"
-    aria-label="Увеличенное изображение"
   >
     <button
       class="lightbox-close"
       onclick="closeImage()"
-      aria-label="Закрыть изображение"
+      aria-label="Закрыть"
     >&times;</button>
 
     <img
@@ -321,19 +292,12 @@
       }
     });
 
-    function confirmAge() {
-      const notice = document.getElementById("notice");
-      notice.style.display = "block";
-      notice.textContent =
-        "Возраст подтверждён. Для продолжения используйте ссылку на основной сайт.";
-    }
-
-    function declineAge() {
-      const notice = document.getElementById("notice");
-      notice.style.display = "block";
-      notice.textContent =
-        "Доступ к материалам для совершеннолетних закрыт.";
-    }
+    document.querySelector(".lightbox-image").addEventListener(
+      "click",
+      function(event) {
+        event.stopPropagation();
+      }
+    );
   </script>
 
 </body>
