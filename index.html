@@ -8,20 +8,19 @@
   <title>Подтверждение возраста 18+</title>
   <meta name="description" content="Информационная страница подтверждения возраста.">
 
-  <!-- Превью для социальных сетей -->
+  <!-- Превью социальных сетей -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://maere10.github.io/">
   <meta property="og:title" content="Подтверждение возраста 18+">
-  <meta property="og:description" content="Для продолжения необходимо подтвердить возраст.">
+  <meta property="og:description" content="Информационная страница подтверждения возраста.">
   <meta property="og:image" content="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:site_name" content="Подтверждение возраста">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Подтверждение возраста 18+">
-  <meta name="twitter:description" content="Для продолжения необходимо подтвердить возраст.">
+  <meta name="twitter:description" content="Информационная страница подтверждения возраста.">
   <meta name="twitter:image" content="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png">
 
   <meta name="theme-color" content="#ffffff">
@@ -42,8 +41,13 @@
       flex-direction: column;
     }
 
+    body.lightbox-open {
+      overflow: hidden;
+    }
+
     .flag {
       height: 8px;
+      flex-shrink: 0;
       background: linear-gradient(
         to bottom,
         #ffffff 33.33%,
@@ -83,26 +87,20 @@
       box-shadow: 0 8px 35px rgba(0,0,0,.07);
     }
 
-    /* Увеличенная кликабельная картинка */
-    .image-link {
-      display: block;
-      width: 100%;
-      max-width: 360px;
-      margin: 0 auto 25px;
-      cursor: pointer;
-    }
-
+    /* Основная картинка */
     .preview-image {
       display: block;
       width: 100%;
-      height: auto;
       max-width: 360px;
-      border-radius: 8px;
+      height: auto;
+      margin: 0 auto 25px;
+      border-radius: 9px;
+      cursor: zoom-in;
       transition: transform .2s ease;
     }
 
-    .image-link:hover .preview-image {
-      transform: scale(1.03);
+    .preview-image:hover {
+      transform: scale(1.02);
     }
 
     h1 {
@@ -165,17 +163,66 @@
       background: #fff;
     }
 
+    /* Окно увеличенного изображения */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, .92);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox-image {
+      display: block;
+      max-width: 100%;
+      max-height: 88vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      width: 45px;
+      height: 45px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #fff;
+      font-size: 38px;
+      font-weight: 300;
+      cursor: pointer;
+    }
+
     @media (max-width: 480px) {
       .card {
         padding: 25px 18px;
       }
 
-      .image-link {
+      .preview-image {
         max-width: 100%;
       }
 
       h1 {
         font-size: 23px;
+      }
+
+      .lightbox {
+        padding: 10px;
+      }
+
+      .lightbox-image {
+        max-height: 85vh;
       }
     }
   </style>
@@ -192,19 +239,16 @@
   <main>
     <section class="card">
 
-      <a
-        href="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="image-link"
-        aria-label="Открыть изображение в полном размере"
+      <!-- Картинка с увеличением внутри сайта -->
+      <img
+        class="preview-image"
+        src="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png"
+        alt="Иллюстрация"
+        onclick="openImage()"
+        role="button"
+        tabindex="0"
+        onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openImage(); }"
       >
-        <img
-          class="preview-image"
-          src="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png"
-          alt="Иллюстрация"
-        >
-      </a>
 
       <h1>Вам исполнилось 18 лет?</h1>
 
@@ -231,12 +275,52 @@
   <footer>
     Информационная страница подтверждения возраста.
     <br>
+    Не является официальным сайтом государственного органа.
+    <br>
     © 2026
   </footer>
 
   <div class="flag"></div>
 
+  <!-- Увеличенное изображение -->
+  <div
+    class="lightbox"
+    id="lightbox"
+    onclick="closeImage()"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Увеличенное изображение"
+  >
+    <button
+      class="lightbox-close"
+      onclick="closeImage()"
+      aria-label="Закрыть изображение"
+    >&times;</button>
+
+    <img
+      class="lightbox-image"
+      src="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png"
+      alt="Увеличенное изображение"
+    >
+  </div>
+
   <script>
+    function openImage() {
+      document.getElementById("lightbox").classList.add("active");
+      document.body.classList.add("lightbox-open");
+    }
+
+    function closeImage() {
+      document.getElementById("lightbox").classList.remove("active");
+      document.body.classList.remove("lightbox-open");
+    }
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        closeImage();
+      }
+    });
+
     function confirmAge() {
       const notice = document.getElementById("notice");
       notice.style.display = "block";
