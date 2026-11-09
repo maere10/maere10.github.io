@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Информационная страница</title>
-  <meta name="description" content="Информационная страница.">
+  <meta name="description" content="Информационная страница с изображением и ссылками.">
 
   <!-- Превью для социальных сетей -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://maere10.github.io/">
   <meta property="og:title" content="Информационная страница">
-  <meta property="og:description" content="Посмотрите изображение и перейдите на сайт.">
+  <meta property="og:description" content="Посмотрите изображение и выберите нужный сайт.">
   <meta property="og:image" content="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -20,7 +20,7 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Информационная страница">
-  <meta name="twitter:description" content="Посмотрите изображение и перейдите на сайт.">
+  <meta name="twitter:description" content="Посмотрите изображение и выберите нужный сайт.">
   <meta name="twitter:image" content="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png">
 
   <meta name="theme-color" content="#ffffff">
@@ -120,16 +120,15 @@
       display: block;
       width: 100%;
       padding: 17px;
-      border: none;
       border-radius: 9px;
       font-size: 15px;
       font-weight: 700;
       text-decoration: none;
-      cursor: pointer;
+      text-align: center;
     }
 
     .yes {
-      color: white;
+      color: #fff;
       background: #0039a6;
     }
 
@@ -147,13 +146,13 @@
       background: #fff;
     }
 
-    /* Увеличенное изображение */
+    /* Просмотр изображения */
     .lightbox {
       display: none;
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: rgba(0, 0, 0, .92);
+      background: rgba(0,0,0,.92);
       align-items: center;
       justify-content: center;
       padding: 20px;
@@ -224,22 +223,32 @@
       <img
         class="preview-image"
         src="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png"
-        alt="Изображение"
+        alt="Иллюстрация"
         onclick="openImage()"
-        role="button"
         tabindex="0"
+        role="button"
+        aria-label="Увеличить изображение"
       >
 
-      <h1>Информационная страница</h1>
+      <h1>Вам исполнилось 18 лет?</h1>
 
       <p class="description">
-  Для продолжения в розыгрыше подарков необходимо подтвердить,
-  что вам уже исполнилось 18 лет.
-</p>
+        Для продолжения в розыгрыше подарков необходимо подтвердить, что вам уже исполнилось 18 лет.
+      </p>
 
       <div class="buttons">
-        <a class="yes" href="https://ya.ru/">
-          ПЕРЕЙТИ НА ЯНДЕКС
+        <a
+          class="yes"
+          href="https://ya.ru/"
+        >
+          ДА, МНЕ ЕСТЬ 18 ЛЕТ
+        </a>
+
+        <a
+          class="no"
+          href="https://google.com/"
+        >
+          НЕТ, МНЕ НЕТ 18 ЛЕТ
         </a>
       </div>
 
@@ -254,14 +263,16 @@
 
   <div class="flag"></div>
 
-  <!-- Окно просмотра изображения -->
+  <!-- Увеличенное изображение -->
   <div
     class="lightbox"
     id="lightbox"
     onclick="closeImage()"
     role="dialog"
     aria-modal="true"
+    aria-label="Просмотр изображения"
   >
+
     <button
       class="lightbox-close"
       onclick="closeImage()"
@@ -273,6 +284,7 @@
       src="https://maere10.github.io/f96897ac-5436-4825-8c98-4c681e1b5147.png"
       alt="Увеличенное изображение"
     >
+
   </div>
 
   <script>
@@ -286,16 +298,26 @@
       document.body.classList.remove("lightbox-open");
     }
 
+    document.querySelector(".lightbox-image").addEventListener(
+      "click",
+      function(event) {
+        event.stopPropagation();
+      }
+    );
+
     document.addEventListener("keydown", function(event) {
       if (event.key === "Escape") {
         closeImage();
       }
     });
 
-    document.querySelector(".lightbox-image").addEventListener(
-      "click",
+    document.querySelector(".preview-image").addEventListener(
+      "keydown",
       function(event) {
-        event.stopPropagation();
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openImage();
+        }
       }
     );
   </script>
